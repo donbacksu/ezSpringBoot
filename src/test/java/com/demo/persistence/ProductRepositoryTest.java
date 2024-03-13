@@ -1,6 +1,7 @@
 package com.demo.persistence;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Disabled;
@@ -53,6 +54,7 @@ public class ProductRepositoryTest {
 	}
 	
 //	상품 정보 수정
+	@Disabled
 	@Test
 	public void testUpdateProduct() {
 		Product product = productRepo.findById(1).get();
@@ -60,5 +62,23 @@ public class ProductRepositoryTest {
 		product.setContent("따뜻한 크로커다일 부츠입니다.");
 		
 		productRepo.save(product);
+	}
+	
+	@Test
+	public void testNewProductList() {
+		List<Product> newProductList = productRepo.getNewProduct();
+		
+		for (Product p : newProductList) {
+			System.out.println(p);
+		}
+	}
+	
+	@Test
+	public void testBestProductList() {
+		List<Product> bestProductList = productRepo.getBestProduct();
+		
+		for (Product p : bestProductList) {
+			System.out.println(p);
+		}
 	}
 }

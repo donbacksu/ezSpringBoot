@@ -10,10 +10,10 @@ import com.demo.domain.Product;
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
 //	신상품 조회
-	@Query(value="SELECT * FROME new_pro_view", nativeQuery = true)
+	@Query(value="SELECT * FROM new_pro_view", nativeQuery = true)
 	List<Product> getNewProduct();
 	
 //	베스트 상품 조회
-	@Query(value="SELECT * FROME new_pro_view", nativeQuery = true)
+	@Query(value="SELECT * FROM best_pro_view", nativeQuery = true)
 	List<Product> getBestProduct();
 }
