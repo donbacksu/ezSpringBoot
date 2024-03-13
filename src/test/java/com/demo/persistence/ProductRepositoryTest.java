@@ -1,7 +1,9 @@
 package com.demo.persistence;
 
 import java.util.Date;
+import java.util.Optional;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,6 +16,7 @@ public class ProductRepositoryTest {
 	@Autowired
 	ProductRepository productRepo;
 	
+	@Disabled
 	@Test
 	public void productInsert() {
 		
@@ -34,5 +37,28 @@ public class ProductRepositoryTest {
 		for (int i = 0; i <products.length; i++) {
 			productRepo.save(products[i]);
 		}
+	}
+	
+//	상품 ID를 조건으로 조회
+	@Disabled
+	@Test
+	public void testProduct() {
+		Optional<Product> product = productRepo.findById(1);
+		
+		if(product.isPresent()) {
+		    System.out.println(product.get().toString());
+		} else {
+			System.out.println("제품이 존재하지 않습니다.");
+		}
+	}
+	
+//	상품 정보 수정
+	@Test
+	public void testUpdateProduct() {
+		Product product = productRepo.findById(1).get();
+		
+		product.setContent("따뜻한 크로커다일 부츠입니다.");
+		
+		productRepo.save(product);
 	}
 }

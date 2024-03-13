@@ -38,6 +38,10 @@ public class Product {
 	@Temporal(value = TemporalType.TIMESTAMP)
 	@ColumnDefault("sysdate")
 	private Date regdate;
+	
+	public Product() {
+    }
+	
 	public Product(String name, String kind, int price1, int price2, int price3, String content, String image,
 			String useyn, String bestyn, Date regdate) {
 		super();
