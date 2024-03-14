@@ -9,4 +9,9 @@ public interface ProductService {
 	public List<Product> getNewProductList();
 	
 	public List<Product> getBestProductList();	
+	
+	public Product getProduct(int pseq);
+	
+	public List<Product> getProductListByKind(String kind);
+	
 }

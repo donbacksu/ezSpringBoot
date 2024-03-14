@@ -22,6 +22,6 @@ public class HomeController {
 		List<Product> bestProductList = productService.getBestProductList();
 		
 		model.addAttribute("newProductList", newProductList);
-		model.addAttribute("newProductList", bestProductList);
+		model.addAttribute("bestProductList", bestProductList);
 	}
 }

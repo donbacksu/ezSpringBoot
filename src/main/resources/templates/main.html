@@ -23,9 +23,11 @@
 		<div id="bestProduct">
 			<th:block th:each="productVO : ${newProductList}">
 				<div id="item">
-					<img src="@{/product_images/} + ${productVO.image}"/>
-					<h3 th:text="${productVO.name}"></h3>
-					<p th:text="${productVO.price2}"></p>
+					<a th:href="@{product_detail(pseq=${productVO.pseq})}">
+						<img th:src="@{/product_images/} + ${productVO.image}" />
+						<h3 th:text="${productVO.name}"></h3>
+						<p th:text="${productVO.price2}"></p>
+					</a>
 				</div>
 			</th:block>
 		</div>
@@ -33,19 +35,21 @@
 
 		<h2> Best Item</h2>
 		<div id="bestProduct">
-			<th:block th:each="productVO : ${newProductList}">
+			<th:block th:each="productVO : ${bestProductList}">
 				<div id="item">
-					<img src="@{/product_images/} + ${productVO.image}"/>
-					<h3 th:text="${productVO.name}"></h3>
-					<p th:text="${productVO.price2}"></p>
+					<a th:href="@{product_detail(pseq=${productVO.pseq})}">
+						<img th:src="@{/product_images/} + ${productVO.image}" />
+						<h3 th:text="${productVO.name}"></h3>
+						<p th:text="${productVO.price2}"></p>
+					</a>
 				</div>
 			</th:block>
-		
+
 
 		</div>
 		<div class="clear"></div>
 	</div>
-
+ 
 	<th:block th:insert="~{/includes/footer}"></th:block>
 </body>
 

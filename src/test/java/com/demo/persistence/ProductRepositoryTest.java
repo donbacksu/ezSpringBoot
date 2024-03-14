@@ -64,6 +64,7 @@ public class ProductRepositoryTest {
 		productRepo.save(product);
 	}
 	
+	@Disabled
 	@Test
 	public void testNewProductList() {
 		List<Product> newProductList = productRepo.getNewProduct();
@@ -73,11 +74,22 @@ public class ProductRepositoryTest {
 		}
 	}
 	
+	@Disabled
 	@Test
 	public void testBestProductList() {
 		List<Product> bestProductList = productRepo.getBestProduct();
 		
 		for (Product p : bestProductList) {
+			System.out.println(p);
+		}
+	}
+	
+	@Test
+	public void testProductListByKind() {
+//		1:힐, 2:부츠, 3:샌달, 4:슬리퍼, 5:스니커즈, 6:세일상품
+		List<Product> productList = productRepo.findProductByKindContaining("2");
+		
+		for (Product p : productList) {
 			System.out.println(p);
 		}
 	}

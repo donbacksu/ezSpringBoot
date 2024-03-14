@@ -16,4 +16,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 //	베스트 상품 조회
 	@Query(value="SELECT * FROM best_pro_view", nativeQuery = true)
 	List<Product> getBestProduct();
+	
+//	상품 종류별 조회
+	List<Product> findProductByKindContaining(String kind);
 }

@@ -26,4 +26,15 @@ public class ProductSerViceImpl implements ProductService {
 		return productRepo.getBestProduct();
 	}
 
+	@Override
+	public Product getProduct(int pseq) {
+		return productRepo.findById(pseq).get();
+	}
+
+	@Override
+	public List<Product> getProductListByKind(String kind) {
+		
+		return productRepo.findProductByKindContaining(kind);
+	}
+
 }
