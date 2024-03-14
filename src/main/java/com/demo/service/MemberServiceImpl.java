@@ -1,11 +1,14 @@
 package com.demo.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.demo.domain.Address;
 import com.demo.domain.Member;
+import com.demo.persistence.AddressRepository;
 import com.demo.persistence.MemberRepository;
 
 @Service
@@ -13,6 +16,8 @@ public class MemberServiceImpl implements MemberService {
 
 	@Autowired
 	private MemberRepository memberRepo;
+	@Autowired
+	private AddressRepository addrRepo;
 	
 	@Override
 	public void insertMember(Member vo) {
@@ -56,6 +61,12 @@ public class MemberServiceImpl implements MemberService {
 		} else {
 			return -1;
 		}
+	}
+
+	@Override
+	public List<Address> getAddressByDong(String dong) {
+
+		return addrRepo.findByDongContaining(dong);
 	}
 
 }

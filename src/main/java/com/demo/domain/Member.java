@@ -2,8 +2,8 @@ package com.demo.domain;
 
 import java.util.Date;
 
-import org.hibernate.annotations.ColumnDefault;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Temporal;
@@ -33,10 +33,10 @@ public class Member {
 	private String address;
 	private String phone;
 	
-	@ColumnDefault("'y'")
+	@Column(columnDefinition="char(1) default 'y'")
 	private String useyn;
 	
 	@Temporal(value = TemporalType.TIMESTAMP)
-	@ColumnDefault("sysdate")
+	@Column(columnDefinition="DATE default sysdate")
 	private Date regdate;
 }

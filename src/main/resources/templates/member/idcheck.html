@@ -43,7 +43,7 @@ function idok(){
         <script type="text/javascript">
           opener.document.formm.id.value="";
         </script>
-        ${id}는 이미 사용중인 아이디입니다.
+        [[${id}]]는 이미 사용중인 아이디입니다.
       </th:block>
       <th:block th:if="${message==-1}">
         [[${id}]]는 사용 가능한 ID입니다.

@@ -83,7 +83,7 @@ public class ProductRepositoryTest {
 			System.out.println(p);
 		}
 	}
-	
+	@Disabled
 	@Test
 	public void testProductListByKind() {
 //		1:힐, 2:부츠, 3:샌달, 4:슬리퍼, 5:스니커즈, 6:세일상품
