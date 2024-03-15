@@ -107,4 +107,60 @@ public class MemberController {
 		
 		return "member/findZipNum";
 	}
+	
+//	아이디 비밀번호 찾기 화면표시
+	@GetMapping("/find_id_form")
+	public String findIdView() {
+		return "member/findIdAndPassword";
+	}
+	
+//	아이디 찾기 처리
+	@PostMapping("/find_id")
+	public String findIdAction(Member vo, Model model) {
+		
+		Member member = memberService.getIdByNameEmail(vo.getName(), vo.getEmail());
+		
+		if (member != null) { // 아이디 조회 성공
+			model.addAttribute("message", 1);
+			model.addAttribute("id", member.getId());
+		} else {
+			model.addAttribute("message", -1);
+		}
+		
+		return "member/findResult";
+	}
+	
+	@PostMapping("/find_pwd")
+	public String findPwdAction(Member vo, Model model) {
+		
+		Member member = memberService.getPwdByNameEmailId(vo.getName(), vo.getEmail(), vo.getId());
+		
+		if (member != null) { // 비밀번호 조회 성공
+			model.addAttribute("message", 1);
+			model.addAttribute("id", member.getId());
+		} else {
+			model.addAttribute("message", -1);
+		}
+		
+		return "member/findPwdResult";
+	}
+	
+	@PostMapping("/change_pwd")
+	public String changePwdAction(String id, String pwd) {
+		
+		Member member = memberService.updatePwd(id, pwd);
+		
+		return "member/changePwdOk";
+	}
+	
+//	/*
+//	 * 비밀번호 변경
+//	 */
+//	@PostMapping(value="change_pwd")
+//	public String changePwdAction(Member vo) {
+//		System.out.println("비밀번호 변경: " + vo);
+//		memberService.changePassword(vo);
+//		
+//		return "member/changePwdOk";
+//	}
 }

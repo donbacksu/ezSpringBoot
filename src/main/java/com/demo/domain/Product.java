@@ -3,6 +3,8 @@ package com.demo.domain;
 import java.util.Date;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,6 +21,8 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
+@DynamicInsert
+@DynamicUpdate
 public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

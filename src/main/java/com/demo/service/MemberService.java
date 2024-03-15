@@ -21,4 +21,14 @@ public interface MemberService {
 	// 동이름으로 주소 찾기
 	public List<Address> getAddressByDong(String dong);
 	
+//	이름과 이메일로 아이디 찾기
+	public Member getIdByNameEmail(String name, String Email);
+	
+//	이름과 이메일, 아이디로 비밀번호 찾기
+	public Member getPwdByNameEmailId(String name, String email, String id);
+	
+//	비밀번호 변경
+	public Member updatePwd(String id ,String pwd);
+	
+//	public void changePassword(Member vo);
 }
