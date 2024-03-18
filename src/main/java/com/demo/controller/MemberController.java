@@ -147,8 +147,8 @@ public class MemberController {
 	
 	@PostMapping("/change_pwd")
 	public String changePwdAction(String id, String pwd) {
-		
-		Member member = memberService.updatePwd(id, pwd);
+		System.out.println("비밀번호 변경 : " + pwd);
+		memberService.updatePwd(id, pwd);
 		
 		return "member/changePwdOk";
 	}
