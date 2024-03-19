@@ -33,7 +33,7 @@
        <td> [[${#numbers.formatInteger(orderVO.quantity * orderVO.product.price2, 3, 'COMMA') + '원'}]] </td>
        <td>
          <span th:if ="${orderVO.result == '1'}">진행중</span> 
-         <span th:unless ="${orderVO.result == '1'}" style="color:red;">처리완료</span>
+         <span th:unless ="${orderVO.result == '1'}" th:style="color:red;">처리완료</span>
        </td>
      </tr>
      </th:block>  

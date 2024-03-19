@@ -19,4 +19,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	
 //	상품 종류별 조회
 	List<Product> findProductByKindContaining(String kind);
+	
+//	이름으로 전체 상품 조회
+	List<Product> findProductByNameContainingOrderByName(String name);
 }

@@ -66,8 +66,9 @@ public class OrderServiceImpl implements OrderService {
 		return oseq;
 	}
 
+//	주문 상세 내역 조회
 	@Override
-	public List<OrderDetail> getListOrderById(String id, int oseq) {
+	public List<OrderDetail> getListOrderDetailById(String id, int oseq) {
 
 		return orderRepo.getListOrderById(id, oseq, "1");
 	}
@@ -94,6 +95,12 @@ public class OrderServiceImpl implements OrderService {
 	public void insertOrderDetail(OrderDetail vo) {
 	
 		orderDetailRepo.save(vo);
+	}
+
+	@Override
+	public Orders getListOrderById(String id, int oseq) {
+		
+		return orderRepo.getOrderByMemberId(id, oseq);
 	}
 
 }

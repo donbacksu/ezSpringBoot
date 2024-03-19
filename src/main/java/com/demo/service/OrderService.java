@@ -14,7 +14,10 @@ public interface OrderService {
 	int insertOrder(Orders vo);
 
 //	사용자별 주문 내역
-	List<OrderDetail> getListOrderById(String id, int oseq);
+	List<OrderDetail> getListOrderDetailById(String id, int oseq);
+	
+//	사용자별 주문 내역
+	Orders getListOrderById(String id, int oseq);
 	
 //	사용자별 전체 주문번호 내역
 	List<Integer> getSeqOrdering(String id, String result);
@@ -22,5 +25,6 @@ public interface OrderService {
 //	주문 결과처리
 	void updateOrderResult(int odseq);
 	
+//	주문 상세정보 저장
 	void insertOrderDetail(OrderDetail vo);
 }

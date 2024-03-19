@@ -1,5 +1,6 @@
 package com.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import com.demo.domain.Member;
 import com.demo.domain.OrderDetail;
 import com.demo.domain.Orders;
 import com.demo.domain.Product;
+import com.demo.dto.OrderVO;
 import com.demo.service.CartService;
 import com.demo.service.OrderService;
 
@@ -107,22 +109,163 @@ public class MypageController {
 	}
 
 	@GetMapping("/order_list")
-	public String orderListAction(HttpSession session, 
-			@RequestParam(value = "oseq") int oseq, Model model) {
-		int totalCount = 0;
+	public String orderListAction(HttpSession session, @RequestParam(value = "oseq") int oseq, Model model) {
+
 		Member loginUser = (Member) session.getAttribute("loginUser");
-		
-		if (loginUser == null) {	// 로그인이 안되어 있음.
-			return "member/login";	// 로그인 화면으로 이동
+
+		if (loginUser == null) { // 로그인이 안되어 있음.
+			return "member/login"; // 로그인 화면으로 이동
 		} else {
-			List<OrderDetail> orderList = orderService.getListOrderById(loginUser.getId(), oseq);
-			for (OrderDetail orderDetail : orderList) {
+//			주문내역 조회
+			Orders order = orderService.getListOrderById(loginUser.getId(), oseq);
+
+//			주문 상세내역 조회
+//			List<OrderDetail> orderList = orderService.getListOrderDetailById(loginUser.getId(), oseq);
+
+//			주문 총액 계산 변수
+			int totalCount = 0;
+
+//			주문 총액 계산
+			for (OrderDetail orderDetail : order.getOrderDetailList()) {
 				totalCount += orderDetail.getProduct().getPrice2();
 			}
-			
-			model.addAttribute("orderList", orderList);
+
+			model.addAttribute("orderList", order.getOrderDetailList());
+			model.addAttribute("orderDate", order.getIndate());
+
+//			주문 총액 계산 결과
 			model.addAttribute("totalPrice", totalCount);
 		}
 		return "mypage/orderList";
+	}
+
+//	진행중인 사용자 주문내역 요약 조회
+	@GetMapping("/mypage")
+	public String mypageView(HttpSession session, Model model) {
+		Member loginUser = (Member) session.getAttribute("loginUser");
+
+		if (loginUser == null) { // 로그인이 안되어 있음.
+			return "member/login"; // 로그인 화면으로 이동
+		} else {
+//			(1)사용자의 진행중인 주문번호 목록 조회
+			List<Integer> oseqList = orderService.getSeqOrdering(loginUser.getId(), "1");
+//			(2)각 주문번호에 대해 주문조회 및 요약정보 생성
+			List<OrderVO> summaryList = new ArrayList<OrderVO>();
+			for (int oseq : oseqList) {
+				OrderVO summary = new OrderVO();
+//			주문 번호별 주문조회
+				Orders order = orderService.getListOrderById(loginUser.getId(), oseq);
+
+//			각 주문의 요약정보 생성
+				summary.setOseq(order.getOseq());
+				summary.setIndate(order.getIndate());
+//			한 주문번호의 상품건수
+				int detailSize = order.getOrderDetailList().size();
+
+//				상세주문목록 에서 첫번째 항목의 상품명 저장
+				String summaryPname = order.getOrderDetailList().get(0).getProduct().getName();
+				if (detailSize > 1) {
+					summary.setPname(summaryPname + " 외" + (detailSize - 1) + " 건");
+				} else {
+					summary.setPname(summaryPname);
+				}
+				
+//				각 주문별 합계금액
+				int amount = 0;
+				
+				for(int i = 0; i<detailSize; i++) {
+					amount += order.getOrderDetailList().get(i).getQuantity() *
+							order.getOrderDetailList().get(i).getProduct().getPrice2();
+				}
+				summary.setPrice2(amount);
+				
+				summaryList.add(summary);
+			}
+				
+//			(3)주문정보를 화면에 전달
+			model.addAttribute("title", "진행중인 주문 내역");
+			model.addAttribute("orderList", summaryList);
+		}
+		
+		return "mypage/mypage";
+	}
+	
+	@GetMapping("/order_detail")
+	public String orderDetailView(Orders vo, HttpSession session, Model model) {
+		Member loginUser = (Member) session.getAttribute("loginUser");
+
+		if (loginUser == null) { // 로그인이 안되어 있음.
+			return "member/login"; // 로그인 화면으로 이동
+		} else {
+//			주문내역 조회
+			Orders order = orderService.getListOrderById(loginUser.getId(), vo.getOseq());
+
+//			주문 총액 계산 변수
+			int totalCount = 0;
+
+//			주문 총액 계산
+			for (OrderDetail detail : order.getOrderDetailList()) {
+				totalCount += detail.getQuantity() * detail.getProduct().getPrice2();
+			}
+
+//			화면에 출력할 정보
+			model.addAttribute("title", "주문 상세 정보");
+			model.addAttribute("order", order);
+
+//			주문 총액 계산 결과
+			model.addAttribute("totalPrice", totalCount);
+			
+			return "mypage/orderDetail";
+		}
+	}
+	
+	@GetMapping("/order_all")
+	public String orderAllView(HttpSession session, Model model) {
+		Member loginUser = (Member) session.getAttribute("loginUser");
+
+		if (loginUser == null) { // 로그인이 안되어 있음.
+			return "member/login"; // 로그인 화면으로 이동
+		} else {
+//			(1)사용자의 진행중인 주문번호 목록 조회
+			List<Integer> oseqList = orderService.getSeqOrdering(loginUser.getId(), "");
+//			(2)각 주문번호에 대해 주문조회 및 요약정보 생성
+			List<OrderVO> summaryList = new ArrayList<OrderVO>();
+			for (int oseq : oseqList) {
+				OrderVO summary = new OrderVO();
+//			주문 번호별 주문조회
+				Orders order = orderService.getListOrderById(loginUser.getId(), oseq);
+
+//			각 주문의 요약정보 생성
+				summary.setOseq(order.getOseq());
+				summary.setIndate(order.getIndate());
+//			한 주문번호의 상품건수
+				int detailSize = order.getOrderDetailList().size();
+
+//				상세주문목록 에서 첫번째 항목의 상품명 저장
+				String summaryPname = order.getOrderDetailList().get(0).getProduct().getName();
+				if (detailSize > 1) {
+					summary.setPname(summaryPname + " 외" + (detailSize - 1) + " 건");
+				} else {
+					summary.setPname(summaryPname);
+				}
+				
+//				각 주문별 합계금액
+				int amount = 0;
+				
+				for(int i = 0; i<detailSize; i++) {
+					amount += order.getOrderDetailList().get(i).getQuantity() *
+							order.getOrderDetailList().get(i).getProduct().getPrice2();
+				}
+				summary.setPrice2(amount);
+				
+				summaryList.add(summary);
+			}
+				
+//			(3)주문정보를 화면에 전달
+			model.addAttribute("title", "총 주문 내역");
+			model.addAttribute("orderList", summaryList);
+		}
+		
+		return "mypage/mypage";
 	}
 }
