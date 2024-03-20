@@ -5,7 +5,7 @@
 
 <article>
 <h1>상품리스트</h1>	
-<form name="frm" id="prod_form" method="post">
+<form name="frm" id="prod_form" method="get">
 <table>
   <tr>
   <td width="642">
@@ -36,7 +36,7 @@
         <td height="23" align="center" th:text="${status.count}"></td>
         <td style="text-align: left; padding-left: 50px; padding-right: 0px;">   
            <!--  <a href="#" onclick="go_detail('${pageMaker.criteria.pageNum}','${pageMaker.criteria.rowsPerPage}','${productVO.pseq}')">-->
-  		   <a href="#" th:onclick="'javascript:go_detail('+${productVO.pseq}+');'">    
+  		   <a th:href="@{admin_product_detail(pseq=${productVO.pseq})}">    
     	    [[${productVO.name}]]     
    		   </a>
    	    </td>

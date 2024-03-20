@@ -93,4 +93,15 @@ public class ProductRepositoryTest {
 			System.out.println(p);
 		}
 	}
+	
+//	전체 상품목록 조회
+	@Disabled
+	@Test
+	public void testGetAllProduct() {
+		List<Product> productList = productRepo.findProductByNameContainingOrderByName("");
+	
+		for (Product p : productList) {
+			System.out.println(p);
+		}
+	}
 }

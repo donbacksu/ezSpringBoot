@@ -123,4 +123,15 @@ public class OrderRepositoryTest {
 			System.out.println(oseq);
 		}
 	}
+	
+	@Disabled
+	@Test
+	public void testGetOrderListByName() {
+		
+		List<OrderDetail> orderList = orderRepo.getOrderListByName("서태웅");
+		
+		for(OrderDetail od : orderList) {
+			System.out.println(od);
+		}
+	}
 }

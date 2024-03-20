@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
 <th:block th:insert="~{/admin/header}"></th:block>
 <th:block th:insert="~{/admin/sub_menu}"></th:block>
 
@@ -15,12 +16,12 @@
     <th>상품분류</th>
     <td colspan="5">
     <select name="kind" id="kind">
-      <th:block th:each="kind, status : ${kindList}">
-		  <th:block th:if="${productVO.kind==status.count}">
-            <option value="${status.count}" selected="selected">${kind}</option>
+      <th:block th:each="category, status : ${kindList}">
+		  <th:block th:if="${kind==status.count}">
+            <option value="${status.count}" selected="selected">[[${category]]</option>
           </th:block>
           <th:block th:unless="${productVO.kind==status.count}">
-            <option th:value="${status.count}">[[${kind}]]</option>
+            <option th:value="${status.count}">[[${category}]]</option>
           </th:block>
 
       </th:block>
