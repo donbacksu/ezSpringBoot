@@ -31,4 +31,6 @@ public interface MemberService {
 	public Member updatePwd(String id ,String pwd);
 	
 //	public void changePassword(Member vo);
+	
+	public List<Member> getMemberList(String name);
 }

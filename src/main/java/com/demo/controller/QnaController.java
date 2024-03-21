@@ -79,4 +79,5 @@ public class QnaController {
 			return "redirect:qna_list";
 		}
 	}
+	
 }

@@ -1,6 +1,7 @@
 package com.demo.persistence;
 
 import java.util.Date;
+import java.util.List;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -47,10 +48,22 @@ public class MemberRepositoryTest {
 		memberRepo.save(member2);
 	}
 	
+	@Disabled
 	@Test
 	public void testFindByNameAndEmail() {
 		Member member = memberRepo.findByNameAndEmail("강백호", "shohoku10@gmail.com");
 		
 		System.out.println("member=" + member);
 	}
+	
+	@Test
+	public void testGetMemberName() {
+		List<Member> member = memberRepo.findMemberByNameContaining("");
+		
+		for (Member m : member) {
+            System.out.println(m);
+        }
+		
+	}
+	
 }

@@ -10,4 +10,8 @@ public interface QnaService {
 	Qna getQna(int qseq);
 	
 	List<Qna> getListQna(String id);
+	
+	List<Qna> getListAllQna();
+	
+	void updateQna(Qna vo);
 }

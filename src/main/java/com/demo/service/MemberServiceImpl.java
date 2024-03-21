@@ -88,6 +88,12 @@ public class MemberServiceImpl implements MemberService {
 		
 		return memberRepo.save(member);
 	}
+
+	@Override
+	public List<Member> getMemberList(String name) {
+
+		return memberRepo.findMemberByNameContaining(name);
+	}
 	
 //	@Override
 //	public void changePassword(Member vo) {

@@ -22,4 +22,7 @@ public interface MemberRepository extends JpaRepository<Member, String> {
 //	회원별 장바구니 상품 목록
 	@Query("SELECT c FROM Cart c WHERE c.member.id=?1 AND c.result='1'")
 	public List<Cart> getCartList(String userId);
+	
+//	회원명을 조건으로 회원목록 조회
+	public List<Member> findMemberByNameContaining(String name);
 }

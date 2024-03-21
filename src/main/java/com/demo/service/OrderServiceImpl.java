@@ -103,4 +103,10 @@ public class OrderServiceImpl implements OrderService {
 		return orderRepo.getOrderByMemberId(id, oseq);
 	}
 
+	@Override
+	public List<OrderDetail> getListOrder(String name) {
+
+		return orderRepo.getOrderListByName(name);
+	}
+
 }
