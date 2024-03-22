@@ -9,6 +9,7 @@ import com.demo.domain.Cart;
 import com.demo.domain.OrderDetail;
 import com.demo.domain.Orders;
 import com.demo.domain.Product;
+import com.demo.dto.SalesCountInterface;
 import com.demo.persistence.OrderDetailRepository;
 import com.demo.persistence.OrderRepository;
 
@@ -107,6 +108,12 @@ public class OrderServiceImpl implements OrderService {
 	public List<OrderDetail> getListOrder(String name) {
 
 		return orderRepo.getOrderListByName(name);
+	}
+
+	@Override
+	public List<SalesCountInterface> getProductSales() {
+
+		return orderRepo.findSalesCountReport();
 	}
 
 }

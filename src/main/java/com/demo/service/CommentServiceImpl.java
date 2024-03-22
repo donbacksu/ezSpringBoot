@@ -29,8 +29,12 @@ public class CommentServiceImpl implements CommentService{
 
 	@Override
 	public int getCountCommentList(int pseq) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		List<ProductComment> cList = commentRepo.findCommentByPseq(pseq);
+		
+		int size = cList.size();
+		
+		return size;
 	}
 
 }

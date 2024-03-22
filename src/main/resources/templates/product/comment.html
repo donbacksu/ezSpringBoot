@@ -91,8 +91,11 @@ function getCommentList() {
 		contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 		success: function(data) {
 			var commentList = data.commentList;
+			var commentCcnt = data.commentcCnt;
+			
 			console.log(commentList);
 			showHTML(commentList);
+			showCnt(commentCcnt);
 		},
 		error: function() {
 			alert("상품평 목록을 조회하지 못했습니다.")
@@ -100,8 +103,26 @@ function getCommentList() {
 	});
 }
 
+function showCnt(commentCcnt) {
+	var html = "댓글 ";
+		
+	// commentList - 조회된 상품 댓글 목록
+	if (commentCcnt > 0) {
+
+		// 상품평의 각 항목별로 HTML 생성
+		html += commentCcnt
+		
+	} else { // 조회된 상품평이 없을 경우
+		html += 0;
+	}
+	
+	$("#cCnt").html(html);	/* 브라우저에 출력 */
+	
+}
+
 function showHTML(commentList)	{
 	var html = "";
+	
 
 	// commentList - 조회된 상품 댓글 목록
 	if (commentList.length > 0) {
@@ -113,6 +134,7 @@ function showHTML(commentList)	{
 			html += comment.content+"<br></div>";
 			html += "</div>";
 		});
+		
 	} else { // 조회된 상품평이 없을 경우
 		html += "<div>";
 		html += "<h5>등록된 상품평이 없습니다.</h5>";
@@ -120,6 +142,7 @@ function showHTML(commentList)	{
 	}
 	
 	$("#commentList").html(html);	/* 브라우저에 출력 */
+	
 }
 
 /*
@@ -165,13 +188,15 @@ function displayTime(timeValue) {
 			url: 'comments/save',
 			dataType: 'json',	/* 서버로 전달한 데이터 형식 */
 			data: $("#commentForm").serialize(),
+			contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 			success: function(data) {
-				if (data == 'success') {	// 상품평 등록 성공
+				var result = data.result;
+				if (result == 'success') {	// 상품평 등록 성공
 					getCommentList();		// 상품평 목록 호출
 					$("#content").val("")
-				} else if (data = 'fail') {
+				} else if (result = 'fail') {
 					alert("상품평 등록이 실패하였습니다. 다시 시도해 주세요.")
-				} else if (data == 'not_logedin') {
+				} else if (result == 'not_logedin') {
 					alert("상품평 등록은 로그인이 필요합니다.")
 				}
 			},

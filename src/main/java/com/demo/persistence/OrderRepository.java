@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.demo.domain.OrderDetail;
 import com.demo.domain.Orders;
+import com.demo.dto.SalesCountInterface;
 
 public interface OrderRepository extends JpaRepository<Orders, Integer> {
 	
@@ -43,4 +44,11 @@ public interface OrderRepository extends JpaRepository<Orders, Integer> {
 			+ " WHERE od.order.member.name LIKE %?1% "
 			+ " ORDER BY od.result, od.order.oseq DESC ")
 	public List<OrderDetail> getOrderListByName(String mname);
+	
+	
+//	제품별 판매실적 조회
+	@Query(value="SELECT name pname , sum(quantity) sales_count "
+			+ "FROM ORDER_VIEW "
+			+ "GROUP BY name", nativeQuery=true)
+	List<SalesCountInterface> findSalesCountReport();
 }
